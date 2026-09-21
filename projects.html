@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Projects - AI Video Studio</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f8fc;
+      color: #111827;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .back {
+      border: none;
+      background: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    h1 {
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .new-project {
+      width: 100%;
+      border: none;
+      background: #111827;
+      color: white;
+      padding: 16px;
+      border-radius: 13px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 25px;
+    }
+
+    .project {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+
+    .project-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .project-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    .project-info {
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .status {
+      padding: 7px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      white-space: nowrap;
+      background: #f3f4f6;
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .project-actions button {
+      border: 1px solid #d1d5db;
+      background: white;
+      padding: 10px 13px;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .empty {
+      text-align: center;
+      background: white;
+      border: 1px dashed #d1d5db;
+      border-radius: 18px;
+      padding: 50px 20px;
+      margin-top: 20px;
+    }
+
+    .empty-icon {
+      font-size: 45px;
+      margin-bottom: 15px;
+    }
+
+    .empty h2 {
+      margin-bottom: 8px;
+    }
+
+    .empty p {
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 500px) {
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .project-top {
+        align-items: flex-start;
+      }
+
+      .project-actions {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="top">
+
+      <button class="back" onclick="goHome()">
+        ← Back
+      </button>
+
+      <h1>My Projects</h1>
+
+    </div>
+
+
+    <p class="subtitle">
+      Your saved videos, drafts and translated projects will appear here.
+    </p>
+
+
+    <button class="new-project" onclick="newProject()">
+      ＋ Create New Video
+    </button>
+
+
+    <div class="project">
+
+      <div class="project-top">
+
+        <div>
+
+          <div class="project-title">
+            🎬 My First AI Video
+          </div>
+
+          <div class="project-info">
+            Duration: 30 seconds<br>
+            Style: Realistic
+          </div>
+
+        </div>
+
+        <div class="status">
+          Demo
+        </div>
+
+      </div>
+
+
+      <div class="project-actions">
+
+        <button onclick="continueProject()">
+          ▶ Continue
+        </button>
+
+        <button onclick="downloadProject()">
+          ⬇ Download
+        </button>
+
+        <button onclick="deleteProject()">
+          🗑 Delete
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="empty">
+
+      <div class="empty-icon">
+        📁
+      </div>
+
+      <h2>Your projects</h2>
+
+      <p>
+        When you create or translate videos,
+        your projects will appear here.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    function goHome() {
+
+      window.location.href = "index.html";
+
+    }
+
+
+    function newProject() {
+
+      window.location.href = "create.html";
+
+    }
+
+
+    function continueProject() {
+
+      alert("Project editor will open here.");
+
+    }
+
+
+    function downloadProject() {
+
+      alert("Your video will be available for download after generation.");
+
+    }
+
+
+    function deleteProject() {
+
+      alert("Delete confirmation will be added later.");
+
+    }
+
+  </script>
+
+</body>
+</html>
