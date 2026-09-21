@@ -1,247 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Video Studio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+<title>AI Video Studio</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b1020;
+    color: white;
+}
+
+header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #252b40;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.login {
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border: 1px solid #444b66;
+    border-radius: 10px;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+.hero {
+    text-align: center;
+    padding: 40px 10px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    color: #b9bfd2;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.free {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 18px;
+    background: #17213d;
+    border-radius: 20px;
+    color: #8fb3ff;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.card {
+    display: block;
+    text-decoration: none;
+    color: white;
+    background: #12182b;
+    border: 1px solid #29314a;
+    border-radius: 16px;
+    padding: 25px;
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    border-color: #607cff;
+}
+
+.icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.card h2 {
+    margin: 5px 0 10px;
+}
+
+.card p {
+    color: #aeb5c9;
+    line-height: 1.5;
+}
+
+.features {
+    margin-top: 55px;
+}
+
+.features h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.feature {
+    background: #10162a;
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid #252c44;
+}
+
+.feature h3 {
+    margin-top: 0;
+}
+
+.feature p {
+    color: #aeb5c9;
+    line-height: 1.5;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    margin-top: 40px;
+    color: #777f98;
+    border-top: 1px solid #252b40;
+}
+
+@media (max-width: 700px) {
+
+    .hero h1 {
+        font-size: 32px;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #0b0f19;
-      color: white;
-      min-height: 100vh;
+    .actions,
+    .feature-grid {
+        grid-template-columns: 1fr;
     }
 
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 6%;
-      border-bottom: 1px solid #242b3a;
+        padding: 15px;
     }
-
-    .logo {
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .logo span {
-      color: #6c63ff;
-    }
-
-    .login {
-      background: transparent;
-      color: white;
-      border: 1px solid #454d61;
-      padding: 10px 18px;
-      border-radius: 10px;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 70px 20px 40px;
-    }
-
-    .hero h1 {
-      font-size: clamp(38px, 8vw, 72px);
-      margin-bottom: 20px;
-    }
-
-    .hero h1 span {
-      color: #6c63ff;
-    }
-
-    .hero p {
-      color: #aeb6c7;
-      font-size: 18px;
-      max-width: 650px;
-      margin: auto;
-      line-height: 1.6;
-    }
-
-    .buttons {
-      margin-top: 35px;
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      font-size: 16px;
-    }
-
-    .primary {
-      background: #6c63ff;
-      color: white;
-      padding: 15px 25px;
-      border-radius: 12px;
-      font-weight: bold;
-    }
-
-    .secondary {
-      background: #1a2030;
-      color: white;
-      padding: 15px 25px;
-      border-radius: 12px;
-      border: 1px solid #30394d;
-    }
-
-    .bonus {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 10px 16px;
-      background: #151c2b;
-      border: 1px solid #30394d;
-      border-radius: 30px;
-      color: #cbd2df;
-    }
-
-    .features {
-      max-width: 1100px;
-      margin: 30px auto 70px;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      background: #121827;
-      border: 1px solid #252d3d;
-      border-radius: 18px;
-      padding: 25px;
-    }
-
-    .card .icon {
-      font-size: 32px;
-      margin-bottom: 15px;
-    }
-
-    .card h3 {
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      color: #9da7ba;
-      line-height: 1.5;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      border-top: 1px solid #242b3a;
-      color: #7f899d;
-    }
-
-    @media (max-width: 600px) {
-      header {
-        padding: 15px 20px;
-      }
-
-      .hero {
-        padding-top: 50px;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">AI <span>VIDEO STUDIO</span></div>
-    <button class="login" onclick="login()">Login / Sign Up</button>
-  </header>
+<header>
 
-  <main>
+    <div class="logo">
+        🎬 AI Video Studio
+    </div>
 
-    <section class="hero">
-      <h1>Create <span>AI Videos</span></h1>
+    <a class="login" href="#">
+        Login / Sign Up
+    </a>
 
-      <p>
-        Turn your stories, scripts and images into videos with AI.
-        Create, translate and manage your videos from any device.
-      </p>
+</header>
 
-      <div class="buttons">
-        <button class="primary" onclick="createVideo()">
-          🎬 Create Video
-        </button>
 
-        <button class="secondary" onclick="translateVideo()">
-          🌍 Translate Video
-        </button>
+<main>
 
-        <button class="secondary" onclick="projects()">
-          📁 My Projects
-        </button>
-      </div>
+<section class="hero">
 
-      <div class="bonus">
+    <h1>Create Videos With AI</h1>
+
+    <p>
+        Turn your stories, scripts and images into AI-generated videos.
+        Create, translate and manage your videos in one place.
+    </p>
+
+    <div class="free">
         🎁 New users get 10 free minutes
-      </div>
-    </section>
+    </div>
 
-    <section class="features">
+</section>
 
-      <div class="card">
-        <div class="icon">✍️</div>
-        <h3>Story to Video</h3>
+
+<section class="actions">
+
+    <a class="card" href="create.html">
+
+        <div class="icon">🎬</div>
+
+        <h2>Create Video</h2>
+
         <p>
-          Write your story and let AI organize it into scenes and create a complete video.
+            Write a story, paste a script or upload an image
+            and create a video with AI.
         </p>
-      </div>
 
-      <div class="card">
-        <div class="icon">👤</div>
-        <h3>Character Lock</h3>
-        <p>
-          Keep characters consistent across scenes with locked appearance and voice.
-        </p>
-      </div>
+    </a>
 
-      <div class="card">
-        <div class="icon">🎙️</div>
-        <h3>Voice & Dialogue</h3>
-        <p>
-          Give characters their own voices and let them speak their dialogue.
-        </p>
-      </div>
 
-      <div class="card">
+    <a class="card" href="translate.html">
+
         <div class="icon">🌍</div>
-        <h3>Video Translation</h3>
+
+        <h2>Translate Video</h2>
+
         <p>
-          Translate videos into supported languages with voice-over and subtitles.
+            Upload a video and translate its voice and subtitles
+            into another language.
         </p>
-      </div>
 
-    </section>
+    </a>
 
-  </main>
 
-  <footer>
+    <a class="card" href="projects.html">
+
+        <div class="icon">📁</div>
+
+        <h2>My Projects</h2>
+
+        <p>
+            View, continue, download and manage your saved video projects.
+        </p>
+
+    </a>
+
+
+    <a class="card" href="#">
+
+        <div class="icon">👤</div>
+
+        <h2>Login / Sign Up</h2>
+
+        <p>
+            Create an account and keep your projects and credits
+            synchronized across your devices.
+        </p>
+
+    </a>
+
+</section>
+
+
+<section class="features">
+
+    <h2>Powerful AI Video Features</h2>
+
+    <div class="feature-grid">
+
+        <div class="feature">
+
+            <h3>📝 Story → Video</h3>
+
+            <p>
+                Write your complete story and AI automatically
+                understands and organizes it into scenes.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <h3>🖼️ Image → Video</h3>
+
+            <p>
+                Upload an image and use it as a reference
+                for your AI video.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <h3>👤 Character & Voice Lock</h3>
+
+            <p>
+                Keep characters and voices consistent across
+                different scenes.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <h3>🌍 Video Translation</h3>
+
+            <p>
+                Translate your videos into supported languages
+                with AI voice-over and subtitles.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
     AI Video Studio © 2026
-  </footer>
 
-  <script>
-    function createVideo() {
-  window.location.href = "create.html";
-}
+</footer>
 
-    function translateVideo() {
-  window.location.href = "translate.html";
-    }
-
-    function projects() {
-  window.location.href = "projects.html";
-    }
+</body>
+</html>
