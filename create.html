@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Video - AI Video Studio</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f8fc;
+      color: #111827;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .back {
+      border: none;
+      background: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    h1 {
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 220px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 16px;
+      resize: vertical;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #111827;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 15px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 15px;
+      background: white;
+    }
+
+    .duration-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .duration {
+      padding: 12px 5px;
+      border: 1px solid #d1d5db;
+      background: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .duration.active {
+      background: #111827;
+      color: white;
+    }
+
+    .advanced {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .advanced-content {
+      display: none;
+      margin-top: 18px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    .generate {
+      width: 100%;
+      border: none;
+      background: #111827;
+      color: white;
+      padding: 17px;
+      border-radius: 13px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .generate:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 500px) {
+      .duration-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="top">
+      <button class="back" onclick="goHome()">← Back</button>
+      <h1>Create Video</h1>
+    </div>
+
+    <p class="subtitle">
+      Turn your story, script or image into an AI-generated video.
+    </p>
+
+
+    <div class="card">
+
+      <label>📝 Write a Story or Paste Script</label>
+
+      <textarea
+        id="story"
+        placeholder="Example: Ali walked into the market and saw Aisha. They started talking about their journey..."
+      ></textarea>
+
+    </div>
+
+
+    <div class="card">
+
+      <label>🖼️ Upload Image (Optional)</label>
+
+      <input type="file" id="image" accept="image/*">
+
+    </div>
+
+
+    <div class="card">
+
+      <label>🌍 Language</label>
+
+      <select id="language">
+
+        <option value="English">English</option>
+        <option value="Hausa">Hausa</option>
+        <option value="Arabic">Arabic</option>
+        <option value="French">French</option>
+        <option value="Spanish">Spanish</option>
+        <option value="Portuguese">Portuguese</option>
+        <option value="German">German</option>
+        <option value="Chinese">Chinese</option>
+        <option value="Hindi">Hindi</option>
+        <option value="Japanese">Japanese</option>
+        <option value="Korean">Korean</option>
+
+      </select>
+
+    </div>
+
+
+    <div class="card">
+
+      <label>⏱️ Video Duration</label>
+
+      <div class="duration-grid">
+
+        <button class="duration active" onclick="setDuration(this, '30s')">
+          30s
+        </button>
+
+        <button class="duration" onclick="setDuration(this, '1m')">
+          1m
+        </button>
+
+        <button class="duration" onclick="setDuration(this, '3m')">
+          3m
+        </button>
+
+        <button class="duration" onclick="setDuration(this, '5m')">
+          5m
+        </button>
+
+        <button class="duration" onclick="setDuration(this, '10m')">
+          10m
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <label>🎨 Video Style</label>
+
+      <select id="style">
+
+        <option>Realistic</option>
+        <option>Cinematic</option>
+        <option>Anime</option>
+        <option>3D Animation</option>
+        <option>Cartoon</option>
+        <option>Documentary</option>
+
+      </select>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="advanced" onclick="toggleAdvanced()">
+        ⚙️ Advanced Settings +
+      </div>
+
+      <div class="advanced-content" id="advanced">
+
+        <p>Advanced controls za su zo nan gaba:</p>
+
+        <p>🎭 Character Lock</p>
+        <p>🎙️ Voice Lock</p>
+        <p>🎥 Camera Control</p>
+        <p>🎵 Background Music</p>
+        <p>💬 Subtitles</p>
+        <p>🎬 Scene Control</p>
+
+      </div>
+
+    </div>
+
+
+    <button class="generate" onclick="generateVideo()">
+      🚀 Generate Video
+    </button>
+
+  </div>
+
+
+  <script>
+
+    let selectedDuration = "30s";
+
+    function setDuration(button, duration) {
+
+      document.querySelectorAll(".duration").forEach(function(btn) {
+        btn.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      selectedDuration = duration;
+    }
+
+
+    function toggleAdvanced() {
+
+      const box = document.getElementById("advanced");
+
+      if (box.style.display === "block") {
+        box.style.display = "none";
+      } else {
+        box.style.display = "block";
+      }
+
+    }
+
+
+    function goHome() {
+
+      window.location.href = "index.html";
+
+    }
+
+
+    function generateVideo() {
+
+      const story = document.getElementById("story").value.trim();
+
+      if (!story) {
+
+        alert("Please write a story or paste your script first.");
+
+        return;
+
+      }
+
+      alert(
+        "Your video request is ready!\n\n" +
+        "Duration: " + selectedDuration +
+        "\n\nAI generation engine will be connected next."
+      );
+
+    }
+
+  </script>
+
+</body>
+          </html>
