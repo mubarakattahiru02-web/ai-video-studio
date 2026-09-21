@@ -1,353 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Video - AI Video Studio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<title>Create Video - AI Video Studio</title>
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f8fc;
-      color: #111827;
-    }
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b1020;
+    color: white;
+}
 
-    .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-    }
+header {
+    padding: 18px;
+    border-bottom: 1px solid #29314a;
+}
 
-    .top {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
+.back {
+    color: white;
+    text-decoration: none;
+}
 
-    .back {
-      border: none;
-      background: white;
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 15px;
-    }
+main {
+    max-width: 900px;
+    margin: auto;
+    padding: 30px 20px;
+}
 
-    h1 {
-      font-size: 28px;
-    }
+h1 {
+    text-align: center;
+}
 
-    .subtitle {
-      color: #6b7280;
-      margin-bottom: 25px;
-      line-height: 1.5;
-    }
+.subtitle {
+    text-align: center;
+    color: #aeb5c9;
+    line-height: 1.5;
+}
 
-    .card {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 18px;
-      padding: 22px;
-      margin-bottom: 18px;
-    }
+.box {
+    background: #12182b;
+    border: 1px solid #29314a;
+    border-radius: 16px;
+    padding: 22px;
+    margin-top: 20px;
+}
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
 
-    textarea {
-      width: 100%;
-      min-height: 220px;
-      border: 1px solid #d1d5db;
-      border-radius: 12px;
-      padding: 15px;
-      font-size: 16px;
-      resize: vertical;
-      outline: none;
-    }
+textarea,
+select,
+input[type="file"] {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #3a435f;
+    background: #0b1020;
+    color: white;
+    margin-bottom: 20px;
+}
 
-    textarea:focus {
-      border-color: #111827;
-    }
+textarea {
+    min-height: 180px;
+    resize: vertical;
+}
 
-    input[type="file"] {
-      width: 100%;
-      padding: 15px;
-      border: 1px dashed #cbd5e1;
-      border-radius: 12px;
-      background: #f8fafc;
-    }
+.duration {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
 
-    select {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
-      font-size: 15px;
-      background: white;
-    }
+.duration button {
+    padding: 12px 5px;
+    background: #18213a;
+    color: white;
+    border: 1px solid #3a435f;
+    border-radius: 9px;
+    cursor: pointer;
+}
 
-    .duration-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-    }
+.duration button.active {
+    border-color: #6d86ff;
+    background: #26345d;
+}
 
+.generate {
+    width: 100%;
+    padding: 16px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 12px;
+    background: #4969ff;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.generate:hover {
+    background: #5d78ff;
+}
+
+.advanced {
+    margin-top: 20px;
+}
+
+.advanced summary {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.option {
+    margin-top: 20px;
+}
+
+.notice {
+    margin-top: 15px;
+    color: #9fa8c0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+@media(max-width:600px) {
     .duration {
-      padding: 12px 5px;
-      border: 1px solid #d1d5db;
-      background: white;
-      border-radius: 10px;
-      cursor: pointer;
+        grid-template-columns: repeat(2, 1fr);
     }
-
-    .duration.active {
-      background: #111827;
-      color: white;
-    }
-
-    .advanced {
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .advanced-content {
-      display: none;
-      margin-top: 18px;
-      color: #6b7280;
-      line-height: 1.6;
-    }
-
-    .generate {
-      width: 100%;
-      border: none;
-      background: #111827;
-      color: white;
-      padding: 17px;
-      border-radius: 13px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .generate:hover {
-      opacity: 0.9;
-    }
-
-    @media (max-width: 500px) {
-      .duration-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      h1 {
-        font-size: 24px;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<header>
+    <a class="back" href="index.html">← Back to Home</a>
+</header>
 
-    <div class="top">
-      <button class="back" onclick="goHome()">← Back</button>
-      <h1>Create Video</h1>
-    </div>
+<main>
 
-    <p class="subtitle">
-      Turn your story, script or image into an AI-generated video.
-    </p>
+<h1>🎬 Create Video</h1>
 
+<p class="subtitle">
+Turn your story, script or image into an AI-generated video.
+</p>
 
-    <div class="card">
+<div class="box">
 
-      <label>📝 Write a Story or Paste Script</label>
+<label for="story">Write Your Story or Paste Script</label>
 
-      <textarea
-        id="story"
-        placeholder="Example: Ali walked into the market and saw Aisha. They started talking about their journey..."
-      ></textarea>
+<textarea id="story"
+placeholder="Example:
 
-    </div>
+Aisha walks through a beautiful village.
+She meets Aminu and they start talking.
+Later, they travel together to the city."></textarea>
 
+<label for="image">Upload Image (Optional)</label>
 
-    <div class="card">
+<input type="file" id="image" accept="image/*">
 
-      <label>🖼️ Upload Image (Optional)</label>
+<label for="language">Language</label>
 
-      <input type="file" id="image" accept="image/*">
+<select id="language">
+<option>English</option>
+<option>Hausa</option>
+<option>Arabic</option>
+<option>French</option>
+<option>Spanish</option>
+<option>Portuguese</option>
+<option>German</option>
+<option>Chinese</option>
+<option>Hindi</option>
+<option>Japanese</option>
+<option>Korean</option>
+<option>Italian</option>
+</select>
 
-    </div>
+<label>Video Duration</label>
 
+<div class="duration">
 
-    <div class="card">
+<button onclick="setDuration(this,'30 seconds')">30s</button>
+<button onclick="setDuration(this,'1 minute')">1m</button>
+<button onclick="setDuration(this,'3 minutes')">3m</button>
+<button onclick="setDuration(this,'5 minutes')">5m</button>
+<button onclick="setDuration(this,'10 minutes')">10m</button>
 
-      <label>🌍 Language</label>
+</div>
 
-      <select id="language">
+<p class="notice">
+The AI will automatically understand your story and organize it into scenes.
+</p>
 
-        <option value="English">English</option>
-        <option value="Hausa">Hausa</option>
-        <option value="Arabic">Arabic</option>
-        <option value="French">French</option>
-        <option value="Spanish">Spanish</option>
-        <option value="Portuguese">Portuguese</option>
-        <option value="German">German</option>
-        <option value="Chinese">Chinese</option>
-        <option value="Hindi">Hindi</option>
-        <option value="Japanese">Japanese</option>
-        <option value="Korean">Korean</option>
+<label for="style">Video Style</label>
 
-      </select>
+<select id="style">
+<option>Realistic</option>
+<option>Cinematic</option>
+<option>Anime</option>
+<option>3D Animation</option>
+<option>Cartoon</option>
+<option>Documentary</option>
+</select>
 
-    </div>
+<details class="advanced">
 
+<summary>⚙️ Advanced Settings</summary>
 
-    <div class="card">
+<div class="option">
 
-      <label>⏱️ Video Duration</label>
+<label>Character Lock</label>
 
-      <div class="duration-grid">
+<select>
+<option>On</option>
+<option>Off</option>
+</select>
 
-        <button class="duration active" onclick="setDuration(this, '30s')">
-          30s
-        </button>
+</div>
 
-        <button class="duration" onclick="setDuration(this, '1m')">
-          1m
-        </button>
+<div class="option">
 
-        <button class="duration" onclick="setDuration(this, '3m')">
-          3m
-        </button>
+<label>Voice Lock</label>
 
-        <button class="duration" onclick="setDuration(this, '5m')">
-          5m
-        </button>
+<select>
+<option>On</option>
+<option>Off</option>
+</select>
 
-        <button class="duration" onclick="setDuration(this, '10m')">
-          10m
-        </button>
+</div>
 
-      </div>
+<div class="option">
 
-    </div>
+<label>Voice / Dialogue</label>
 
+<select>
+<option>Characters speak their dialogue</option>
+<option>Voice-over narration</option>
+<option>Both</option>
+<option>None</option>
+</select>
 
-    <div class="card">
+</div>
 
-      <label>🎨 Video Style</label>
+<div class="option">
 
-      <select id="style">
+<label>Subtitles</label>
 
-        <option>Realistic</option>
-        <option>Cinematic</option>
-        <option>Anime</option>
-        <option>3D Animation</option>
-        <option>Cartoon</option>
-        <option>Documentary</option>
+<select>
+<option>On</option>
+<option>Off</option>
+</select>
 
-      </select>
+</div>
 
-    </div>
+<div class="option">
 
+<label>Background Music</label>
 
-    <div class="card">
+<select>
+<option>Auto</option>
+<option>On</option>
+<option>Off</option>
+</select>
 
-      <div class="advanced" onclick="toggleAdvanced()">
-        ⚙️ Advanced Settings +
-      </div>
+</div>
 
-      <div class="advanced-content" id="advanced">
+</details>
 
-        <p>Advanced controls za su zo nan gaba:</p>
+<button class="generate" onclick="generateVideo()">
+🚀 Generate Video
+</button>
 
-        <p>🎭 Character Lock</p>
-        <p>🎙️ Voice Lock</p>
-        <p>🎥 Camera Control</p>
-        <p>🎵 Background Music</p>
-        <p>💬 Subtitles</p>
-        <p>🎬 Scene Control</p>
+<p id="message" class="notice"></p>
 
-      </div>
+</div>
 
-    </div>
+</main>
 
+<script>
 
-    <button class="generate" onclick="generateVideo()">
-      🚀 Generate Video
-    </button>
+let selectedDuration = "";
 
-  </div>
+function setDuration(button, duration) {
 
+    document.querySelectorAll(".duration button")
+    .forEach(btn => btn.classList.remove("active"));
 
-  <script>
+    button.classList.add("active");
 
-    let selectedDuration = "30s";
+    selectedDuration = duration;
+}
 
-    function setDuration(button, duration) {
+function generateVideo() {
 
-      document.querySelectorAll(".duration").forEach(function(btn) {
-        btn.classList.remove("active");
-      });
+    const story = document.getElementById("story").value.trim();
+    const message = document.getElementById("message");
 
-      button.classList.add("active");
+    if (story === "") {
 
-      selectedDuration = duration;
-    }
-
-
-    function toggleAdvanced() {
-
-      const box = document.getElementById("advanced");
-
-      if (box.style.display === "block") {
-        box.style.display = "none";
-      } else {
-        box.style.display = "block";
-      }
-
-    }
-
-
-    function goHome() {
-
-      window.location.href = "index.html";
-
-    }
-
-
-    function generateVideo() {
-
-      const story = document.getElementById("story").value.trim();
-
-      if (!story) {
-
-        alert("Please write a story or paste your script first.");
+        message.textContent =
+        "Please write your story or paste your script first.";
 
         return;
-
-      }
-
-      alert(
-        "Your video request is ready!\n\n" +
-        "Duration: " + selectedDuration +
-        "\n\nAI generation engine will be connected next."
-      );
-
     }
 
-  </script>
+    if (selectedDuration === "") {
+
+        message.textContent =
+        "Please select a video duration.";
+
+        return;
+    }
+
+    message.textContent =
+    "✅ Your video request is ready. AI generation engine will be connected next.";
+
+}
+
+</script>
 
 </body>
-          </html>
+</html>       
