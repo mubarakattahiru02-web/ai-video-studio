@@ -1,5 +1,3 @@
-import { GoogleGenAI } from "@google/genai";
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({
@@ -16,32 +14,54 @@ export default async function handler(req, res) {
       });
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    const apiKey = process.env.GEMINI_API_KEY;
+
+    if (!apiKey) {
       return res.status(500).json({
         error: "GEMINI_API_KEY is missing"
       });
     }
 
-    const ai = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API_KEY
-    });
+    const response = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-generate-preview:predictLongRunning",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey
+        },
+        body: JSON.stringify({
+          instances: [
+            {
+              prompt: prompt
+            }
+          ]
+        })
+      }
+    );
 
-    const operation = await ai.models.generateVideos({
-      model: "veo-3.1-generate-preview",
-      prompt: prompt
-    });
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Google Veo Error:", data);
+
+      return res.status(response.status).json({
+        error: data?.error?.message || "Google Veo request failed",
+        details: data?.error || null
+      });
+    }
 
     return res.status(200).json({
       success: true,
       message: "Video generation started.",
-      operationName: operation.name || null
+      operation: data.name || null
     });
 
   } catch (error) {
-    console.error("VIDEO GENERATION ERROR:", error);
+    console.error("SERVER ERROR:", error);
 
     return res.status(500).json({
-      error: error?.message || "Video generation failed"
+      error: error?.message || "Server error"
     });
   }
 }
