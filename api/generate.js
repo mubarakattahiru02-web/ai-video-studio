@@ -16,6 +16,12 @@ export default async function handler(req, res) {
       });
     }
 
+    if (!process.env.GEMINI_API_KEY) {
+      return res.status(500).json({
+        error: "GEMINI_API_KEY is missing"
+      });
+    }
+
     const ai = new GoogleGenAI({
       apiKey: process.env.GEMINI_API_KEY
     });
@@ -28,14 +34,14 @@ export default async function handler(req, res) {
     return res.status(200).json({
       success: true,
       message: "Video generation started.",
-      operation: operation
+      operationName: operation.name || null
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("VIDEO GENERATION ERROR:", error);
 
     return res.status(500).json({
-      error: error.message || "Video generation failed"
+      error: error?.message || "Video generation failed"
     });
   }
 }
