@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Video - AI Video Studio</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b1020;
+    color: white;
+}
+
+header {
+    padding: 18px 20px;
+    border-bottom: 1px solid #252b40;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.back {
+    color: white;
+    text-decoration: none;
+    border: 1px solid #444b66;
+    padding: 9px 14px;
+    border-radius: 9px;
+}
+
+main {
+    max-width: 900px;
+    margin: auto;
+    padding: 30px 18px 60px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #aeb5c9;
+    margin-bottom: 30px;
+}
+
+.box {
+    background: #12182b;
+    border: 1px solid #29314a;
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 9px;
+    font-weight: bold;
+}
+
+textarea,
+select,
+input[type="file"] {
+    width: 100%;
+    background: #0b1020;
+    color: white;
+    border: 1px solid #3a425d;
+    border-radius: 10px;
+    padding: 13px;
+}
+
+textarea {
+    min-height: 190px;
+    resize: vertical;
+}
+
+select {
+    height: 46px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.duration {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.duration-btn {
+    background: #0b1020;
+    color: white;
+    border: 1px solid #3a425d;
+    padding: 11px 18px;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+.duration-btn.active {
+    background: #5067ff;
+    border-color: #5067ff;
+}
+
+.options {
+    display: grid;
+    gap: 12px;
+}
+
+.option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0b1020;
+    border: 1px solid #29314a;
+    border-radius: 10px;
+    padding: 13px;
+}
+
+.option select {
+    width: auto;
+    min-width: 210px;
+}
+
+.generate {
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+    padding: 16px;
+    background: #5067ff;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.generate:hover {
+    opacity: 0.9;
+}
+
+.progress {
+    display: none;
+    margin-top: 20px;
+    background: #10162a;
+    border: 1px solid #29314a;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.progress.show {
+    display: block;
+}
+
+.step {
+    padding: 8px 0;
+    color: #8992ac;
+}
+
+.status {
+    margin-top: 12px;
+    color: #8fb3ff;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🎬 AI Video Studio</div>
+    <a class="back" href="index.html">← Home</a>
+</header>
+
+<main>
+
+<h1>Create AI Video</h1>
+
+<p class="subtitle">
+Turn your story or script into an AI-generated video.
+</p>
+
+<div class="box">
+
+<label for="story">Your Story / Script</label>
+
+<textarea id="story"
+placeholder="Write your story here...
+
+Example:
+A young man named Aminu walks through a beautiful village. He meets his friend Kabiru and they begin talking about their future."></textarea>
+
+</div>
+
+<div class="box">
+
+<label>Reference Image (Optional)</label>
+
+<input type="file" id="image" accept="image/*">
+
+</div>
+
+<div class="box">
+
+<div class="row">
+
+<div>
+<label for="language">Language</label>
+
+<select id="language">
+<option>English</option>
+<option>Hausa</option>
+<option>Arabic</option>
+<option>French</option>
+<option>Spanish</option>
+<option>Portuguese</option>
+<option>German</option>
+<option>Chinese</option>
+<option>Hindi</option>
+<option>Japanese</option>
+<option>Korean</option>
+<option>Italian</option>
+</select>
+</div>
+
+<div>
+<label for="style">Video Style</label>
+
+<select id="style">
+<option>Realistic</option>
+<option>Cinematic</option>
+<option>Anime</option>
+<option>3D Animation</option>
+<option>Cartoon</option>
+<option>Documentary</option>
+</select>
+</div>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<label>Video Duration</label>
+
+<div class="duration">
+
+<button class="duration-btn active" type="button" data-duration="30s">30s</button>
+<button class="duration-btn" type="button" data-duration="1m">1m</button>
+<button class="duration-btn" type="button" data-duration="3m">3m</button>
+<button class="duration-btn" type="button" data-duration="5m">5m</button>
+<button class="duration-btn" type="button" data-duration="10m">10m</button>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<label>Advanced Settings</label>
+
+<div class="options">
+
+<div class="option">
+<span>Character Lock</span>
+<select id="characterLock">
+<option>On</option>
+<option>Off</option>
+</select>
+</div>
+
+<div class="option">
+<span>Voice Lock</span>
+<select id="voiceLock">
+<option>On</option>
+<option>Off</option>
+</select>
+</div>
+
+<div class="option">
+<span>Voice / Dialogue</span>
+<select id="voiceMode">
+<option>Characters speak dialogue</option>
+<option>Voice-over narration</option>
+<option>Both</option>
+<option>None</option>
+</select>
+</div>
+
+<div class="option">
+<span>Subtitles</span>
+<select id="subtitles">
+<option>On</option>
+<option>Off</option>
+</select>
+</div>
+
+<div class="option">
+<span>Background Music</span>
+<select id="music">
+<option>Auto</option>
+<option>On</option>
+<option>Off</option>
+</select>
+</div>
+
+</div>
+
+</div>
+
+<button class="generate" id="generateButton" onclick="generateVideo()">
+🎬 Generate Video
+</button>
+
+<div class="progress" id="progress">
+
+<strong>Generation Progress</strong>
+
+<div class="step">✓ Understanding your story</div>
+<div class="step">✓ Creating scene plan</div>
+<div class="step">✓ Preparing characters and voices</div>
+<div class="step">⏳ Generating video scenes</div>
+<div class="step">○ Combining scenes</div>
+
+<div class="status" id="status">
+Starting video generation...
+</div>
+
+</div>
+
+</main>
+
+<script>
+
+let selectedDuration = "30s";
+
+document.querySelectorAll(".duration-btn").forEach(button => {
+
+    button.addEventListener("click", function() {
+
+        document.querySelectorAll(".duration-btn")
+            .forEach(btn => btn.classList.remove("active"));
+
+        this.classList.add("active");
+
+        selectedDuration = this.dataset.duration;
+
+    });
+
+});
+
+
+async function generateVideo() {
+
+    const story = document.getElementById("story").value.trim();
+
+    if (!story) {
+        alert("Please enter your story first.");
+        return;
+    }
+
+    const language = document.getElementById("language").value;
+    const style = document.getElementById("style").value;
+    const characterLock = document.getElementById("characterLock").value;
+    const voiceLock = document.getElementById("voiceLock").value;
+    const voiceMode = document.getElementById("voiceMode").value;
+    const subtitles = document.getElementById("subtitles").value;
+    const music = document.getElementById("music").value;
+
+    const button = document.getElementById("generateButton");
+    const progress = document.getElementById("progress");
+    const status = document.getElementById("status");
+
+    button.disabled = true;
+    button.textContent = "⏳ Starting...";
+
+    progress.classList.add("show");
+    status.textContent = "Sending your story to the AI video engine...";
+
+    const prompt = `
+Create an AI video based on the following story:
+
+${story}
+
+Language: ${language}
+Video style: ${style}
+Duration requested: ${selectedDuration}
+
+Character Lock: ${characterLock}
+Voice Lock: ${voiceLock}
+Voice/Dialogue: ${voiceMode}
+Subtitles: ${subtitles}
+Background Music: ${music}
+
+Keep the story coherent and maintain consistent characters and voices.
+`;
+
+    try {
+
+        const response = await fetch("/api/generate", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                prompt: prompt,
+                duration: selectedDuration
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Video generation failed."
+            );
+        }
+
+        status.textContent =
+            "✅ Video generation has started successfully!";
+
+        button.textContent = "✅ Generation Started";
+
+        console.log("Generation operation:", data.operation);
+
+        alert("Video generation has started!");
+
+    } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+            "❌ " + (error.message || "Something went wrong.");
+
+        button.disabled = false;
+        button.textContent = "🎬 Generate Video";
+
+        alert(error.message || "Something went wrong.");
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
