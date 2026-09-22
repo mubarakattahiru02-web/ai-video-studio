@@ -1,0 +1,38 @@
+async function generateVideo() {
+  const story = document.getElementById("story").value.trim();
+
+  if (!story) {
+    alert("Please enter your story first.");
+    return;
+  }
+
+  const durationButton = document.querySelector(".duration-btn.active");
+  const duration = durationButton ? durationButton.textContent.trim() : "30s";
+
+  try {
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        prompt: story,
+        duration: duration
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Video generation failed.");
+    }
+
+    alert("Video generation has started!");
+
+    console.log("Generation operation:", data.operation);
+
+  } catch (error) {
+    console.error(error);
+    alert(error.message || "Something went wrong.");
+  }
+}
